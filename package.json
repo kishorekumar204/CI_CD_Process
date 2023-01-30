@@ -16,13 +16,14 @@
         "@sap-ux/ui5-middleware-fe-mockserver": "2",
         "@sap/ui5-builder-webide-extension": "^1.1.8",
         "ui5-task-zipper": "^0.5.0",
-        "mbt": "^1.2.18"
+        "mbt": "^1.2.18",
+        "rimraf": "^3.0.2"
     },
     "scripts": {
         "start": "fiori run --open \"test/flpSandbox.html?sap-client=002&sap-ui-xx-viewCache=false#project1-display\"",
         "start-local": "fiori run --config ./ui5-local.yaml --open \"test/flpSandbox.html?sap-client=002&sap-ui-xx-viewCache=false#project1-display\"",
-        "build": "ui5 build --config=ui5.yaml --clean-dest --dest dist",
-        "deploy": "fiori cfDeploy",
+        "build": "rimraf resources mta_archives && mbt build --mtar archive",
+        "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
         "deploy-config": "fiori add deploy-config",
         "start-noflp": "fiori run --open \"index.html?sap-client=002&sap-ui-xx-viewCache=false\"",
         "start-mock": "fiori run --config ./ui5-mock.yaml --open \"test/flpSandbox.html?sap-client=002&sap-ui-xx-viewCache=false#project1-display\"",
